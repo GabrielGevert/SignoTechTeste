@@ -9,6 +9,7 @@ class Option extends Model
 {
     use HasFactory;
 
+    protected $guarded = [];
     public function poll() {
         return $this->belongsTo(Poll::class);
     }

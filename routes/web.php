@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PollController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,5 +32,7 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::prefix('poll')->middleware('auth')->group(function(){
-    Route::view('create', 'polls.createPoll');
+
+    Route::view('create', 'polls.createPoll')->name('poll.create');
+    Route::post('create', [PollController::class, 'store'])->name('poll.store');
 });

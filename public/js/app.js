@@ -1,7 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     const addOptionButton = document.querySelector(".add-option");
     const optionsContainer = document.querySelector(".options");
-    const createPollButton = document.querySelector(".create-poll");
     let optionCount = document.querySelectorAll('.option').length; // Contador inicial de opções
 
     function removeOption(optionDiv) {
@@ -31,8 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
         const optionInput = document.createElement("input");
         optionInput.type = "text";
-        optionInput.id = "option" + optionCount;
-        optionInput.name = "option" + optionCount; 
+        optionInput.name = "option[" + optionCount + "][content]"; 
         optionInput.placeholder = "Digite uma opção";
     
         optionLabel.setAttribute("for", "option" + optionCount); 
@@ -73,10 +71,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     addOptionButton.addEventListener("click", addOption);
-
-    createPollButton.addEventListener("click", function () {
-        console.log("Enquete criada!");
-    });
 
     optionsContainer.addEventListener("click", function (event) {
         if (event.target.classList.contains("remove-option")) {
