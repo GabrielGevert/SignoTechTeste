@@ -48,14 +48,14 @@ class Poll extends Model
         return $this->end_at->format('h:i');
     }
 
-    public function getEndDateFormatAttribute()
-    {
-        return $this->end_at->diffForHumans();
-    }
+    // public function getEndDateFormatAttribute()
+    // {
+    //     return $this->end_at->diffForHumans();
+    // }
 
-    public function votes()
-    {
-        return $this->hasMany(Vote::class);
-    }
+    // public function votes()
+    // {
+    //     return $this->hasMany(Vote::class);
+    // }
 
 }
