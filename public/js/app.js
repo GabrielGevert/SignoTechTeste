@@ -8,9 +8,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
     optionsContainer.addEventListener('click', function(event) {
         if (event.target.classList.contains('remove-option')) {
-            const optionDiv = event.target.closest('.option');
-            removeOption(optionDiv);
-            updateOptionLabels(optionsContainer);
+            if (optionsContainer.querySelectorAll('.option').length > 3) { // Verifica se há mais de 3 opções
+                const optionDiv = event.target.closest('.option');
+                removeOption(optionDiv);
+                updateOptionLabels(optionsContainer);
+            } else {
+                alert('A enquete deve ter no mínimo 3 opções');
+            }
         }
     });
 });
@@ -30,7 +34,7 @@ function addOption(optionsContainer, addOptionButton) {
 
     const optionInput = document.createElement("input");
     optionInput.type = "text";
-    optionInput.required = true; // Você pode adicionar required aqui para garantir que o campo seja preenchido
+    optionInput.required = true;
     optionInput.name = "option[" + (optionCount + 1) + "][content]";
     optionInput.placeholder = "Digite uma opção";
 
@@ -41,8 +45,12 @@ function addOption(optionsContainer, addOptionButton) {
     removeButton.className = "remove-option";
     
     removeButton.addEventListener("click", function () {
-        removeOption(optionDiv);
-        updateOptionLabels(optionsContainer);
+        if (optionsContainer.querySelectorAll('.option').length > 3) { // Verifica se há mais de 3 opções
+            removeOption(optionDiv);
+            updateOptionLabels(optionsContainer);
+        } else {
+            alert('A enquete deve ter no mínimo 3 opções');
+        }
     });
 
     optionContentDiv.appendChild(optionInput);
@@ -51,7 +59,7 @@ function addOption(optionsContainer, addOptionButton) {
     optionDiv.appendChild(optionLabel);
     optionDiv.appendChild(optionContentDiv);
 
-    optionsContainer.insertBefore(optionDiv, addOptionButton); // Insere a nova opção antes do botão "Adicionar Opção"
+    optionsContainer.insertBefore(optionDiv, addOptionButton);
 
     updateOptionLabels(optionsContainer);
 }
