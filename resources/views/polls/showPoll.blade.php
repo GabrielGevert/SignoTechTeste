@@ -10,23 +10,19 @@
 <body>
 <x-app-layout>
     <div class="container">
-        <h1>{{$poll->title}}</h1>
+        <h1 class="h1-style">{{$poll->title}}</h1>
+        <h3 class="h3-style">Termina {{$poll->EndDateFormat}}</h3>
         <form action="" method="post">
             @csrf
+
+            @foreach($poll->options as $option)
             <div class="options">
                 <div class="option">
-                    <input type="radio" id="option1" name="option" value="1">
-                    <label for="option1">Opção 1</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="option2" name="option" value="2">
-                    <label for="option2">Opção 2</label>
-                </div>
-                <div class="option">
-                    <input type="radio" id="option3" name="option" value="3">
-                    <label for="option3">Opção 3</label>
+                    <input type="radio" id="option1" name="option" value="{{$option->id}}">
+                    <span">{{$option->content}}</span>
                 </div>
             </div>
+            @endforeach
             <div style="text-align: center;">
                 <button class="button-style" type="submit">Votar</button>
             </div>

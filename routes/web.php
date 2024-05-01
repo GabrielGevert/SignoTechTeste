@@ -42,5 +42,5 @@ Route::prefix('poll')->middleware('auth')->group(function(){
 
     Route::get('/delete/{poll}', [PollController::class, 'delete'])->name('poll.delete');
 
-    Route::get('/poll/{id}', [PollController::class, 'show'])->name('poll.show');
+    Route::get('/poll/{poll}', [PollController::class, 'show'])->name('poll.show');
 });
