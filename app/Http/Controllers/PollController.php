@@ -51,7 +51,8 @@ class PollController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function delete(Poll $poll) {
+    public function delete(Poll $poll) 
+    {
         if ($poll->status != PollStatus::PENDING->value) {
             abort(404, 'Enquete não pendente');
         }
@@ -62,4 +63,19 @@ class PollController extends Controller
         
         return back();
     }
+
+    public function show(Poll $poll)
+    {
+        $poll = $poll->load('options');
+
+        if (auth()->check() && auth()->user()->id) {
+            return view('polls.showPoll', compact('poll'));
+        }
+
+        abort_if($poll->status != PollStatus::STARTED->value, 404);
+
+        return view('polls.showPoll', compact('poll'));
+    }
+
+
 }

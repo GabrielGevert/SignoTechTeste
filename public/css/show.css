@@ -1,0 +1,53 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+.container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.options {
+    margin-bottom: 20px;
+}
+.option {
+    display: flex;
+    margin-bottom: 10px;
+}
+.option label {
+    display: block;
+    font-weight: bold;
+}
+.option input[type="radio"] {
+    margin-right: 10px;
+    vertical-align: middle; /* Adicionado para alinhar verticalmente com o texto */
+}
+.button-style {
+    width: 30%;
+    display: inline-block;
+    padding: 2px;
+    background-color: #4CAF50;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.button-style:hover {
+    background-color: #7DBF71; /* Verde mais claro */
+}
