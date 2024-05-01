@@ -20,7 +20,8 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $pollController = new PollController();
+    return $pollController->index(); // Chamando o método index() do PollController
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -35,4 +36,7 @@ Route::prefix('poll')->middleware('auth')->group(function(){
 
     Route::view('create', 'polls.createPoll')->name('poll.create');
     Route::post('create', [PollController::class, 'store'])->name('poll.store');
+
+    Route::get('/update/{poll}', [PollController::class, 'edit'])->name('poll.edit');
+    Route::put('/update/{poll}', [PollController::class, 'update'])->name('poll.update');
 });

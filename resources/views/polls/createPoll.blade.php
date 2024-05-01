@@ -43,7 +43,7 @@
                             </div>
                         </div>
                         <div class="divider"></div>
-                        <h2>Título de Opções</h2>
+                        <h2>Opções</h2>
                         <div class="options">
                             <div class="option">
                                 <label for="option1">Opção 1</label>
@@ -63,7 +63,7 @@
                                     <input type="text" required name="option[3][content]" placeholder="Digite uma opção">
                                 </div>
                             </div>
-                            <a class="add-option">Adicionar Opção</a>
+                            <button type="button" class="add-option">Adicionar Opção</button>
                         </div>
                         <button type="submit" class="create-poll">Criar Enquete</button>
                     </form>

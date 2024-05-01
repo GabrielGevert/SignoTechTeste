@@ -2,15 +2,60 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Poll extends Model
 {
-    protected $guarded = [];
     use HasFactory;
 
-    public function options() {
+    protected $guarded = [];
+
+
+    protected $casts = [
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
+
+    public function options()
+    {
         return $this->hasMany(Option::class);
     }
+
+    public function getStartDateAttribute()
+    {
+        return $this->start_at->format('Y-m-d');
+    }
+
+    public function getStartTimeAttribute()
+    {
+        return $this->start_at->format('h:i');
+    }
+
+    public function getEndDateAttribute()
+    {
+        return $this->end_at->format('Y-m-d');
+    }
+
+    public function getEndTimeAttribute()
+    {
+        return $this->end_at->format('h:i');
+    }
+
+    public function getEndDateFormatAttribute()
+    {
+        return $this->end_at->diffForHumans();
+    }
+
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
+
 }
