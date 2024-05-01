@@ -48,7 +48,18 @@ class PollController extends Controller
 
         $poll->options()->createMany($request->option);
 
-        // Após a atualização, redirecione para o dashboard
         return redirect()->route('dashboard');
+    }
+
+    public function delete(Poll $poll) {
+        if ($poll->status != PollStatus::PENDING->value) {
+            abort(404, 'Enquete não pendente');
+        }
+        
+        $poll->options()->delete();
+
+        $poll->delete();
+        
+        return back();
     }
 }
