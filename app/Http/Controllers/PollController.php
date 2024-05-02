@@ -34,12 +34,16 @@ class PollController extends Controller
 
     public function edit(Poll $poll)
     {
+        abort_if($poll->status != PollStatus::STARTED->value, 404);
+
         $poll = $poll->load('options');
         return view('polls.editPoll', compact('poll'));
     }
 
     public function update(UpdatePollRequest $request, Poll $poll) 
     {
+        abort_if($poll->status != PollStatus::STARTED->value, 404);
+
         $data = $request->safe()->except('option');
 
         $poll->update($data);
@@ -67,15 +71,43 @@ class PollController extends Controller
     public function show(Poll $poll)
     {
         $poll = $poll->load('options');
+        
+        $selectedOptionContent = null; // Inicializa $selectedOptionContent como nulo
 
-        if (auth()->check() && auth()->user()->id) {
-            return view('polls.showPoll', compact('poll'));
+        // Verifica se o usuário está autenticado
+        if (auth()->check()) {
+            $userVoted = $poll->votes()->where('user_id', auth()->id())->exists();
+            
+            // Se o usuário já votou, busca o conteúdo da opção selecionada
+            if ($userVoted) {
+                $selectedOptionId = $poll->votes()->where('user_id', auth()->id())->first()->option_id;
+                $selectedOption = Option::find($selectedOptionId);
+                $selectedOptionContent = $selectedOption ? $selectedOption->content : null;
+            }
         }
-
-        abort_if($poll->status != PollStatus::STARTED->value, 404);
-
-        return view('polls.showPoll', compact('poll'));
+        
+        // Retorna a view com as informações necessárias
+        return view('polls.showPoll', compact('poll', 'selectedOptionContent'));
     }
 
 
+
+    public function vote(VoteRequest $request, Poll $poll)
+    {
+        abort_if($poll->status != PollStatus::STARTED->value, 404);
+
+        $vote = $poll->votes()->updateOrCreate(['user_id' => auth()->id()], ['option_id' => $request->option_id]);
+
+        $newOption =  Option::find($request->option_id);
+        $newOption->increment('votes_count');
+
+        if ($vote->wasRecentlyCreated) {
+            $selectedOption = $newOption;
+        } else {
+            $selectedOption = $vote->option;
+            $selectedOption->decrement('votes_count');
+        }
+
+        return back()->with('selectedOption', $selectedOption);
+    }   
 }

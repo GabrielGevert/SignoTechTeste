@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 .container {
     max-width: 600px;
     margin: 20px auto;
@@ -12,32 +13,44 @@ body {
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
+
 .h1-style {
     font-size: 24px;
     text-align: center;
     font-weight: bold;
 }
+
 .h3-style {
     font-size: 16px;
     margin-bottom: 40px;
     text-align: center;
 }
+
 .options {
     margin-bottom: 20px;
 }
+
 .option {
     display: flex;
+    align-items: center;
     margin-bottom: 10px;
 }
-.option span {
-    display: block;
-    font-weight: bold;
+
+.left-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
 }
+
+.right-section {
+    margin-left: 10px;
+}
+
 .option input[type="radio"] {
     margin-right: 10px;
-    margin-top: 3px;
-    vertical-align: middle; /* Adicionado para alinhar verticalmente com o texto */
+    vertical-align: middle;
 }
+
 .button-style {
     width: 30%;
     display: inline-block;
@@ -55,5 +68,20 @@ body {
 }
 
 .button-style:hover {
-    background-color: #7DBF71; /* Verde mais claro */
+    background-color: #7DBF71;
 }
+
+.selected-option {
+    display: flex;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.selected-option span {
+    font-weight: bold;
+    margin-right: 5px; /* Adiciona um pequeno espaço entre o span e o texto */
+}
+

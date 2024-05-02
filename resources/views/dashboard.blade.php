@@ -33,7 +33,7 @@
                             <td class="py-3 px-4 w-1/3" style="text-align: right;"> 
                                 <div class="flex justify-end" style="margin-right: 50px; margin-top: 5px">
                                     <a href="{{route('poll.edit', [$poll])}}" style="background-color: #3B82F6; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.375rem; margin-right: 10px;">Editar</a>
-                                    <a href style="background-color: #F59E0B; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.375rem; margin-right: 10px;">Mostrar</a>
+                                    <a href="{{route('poll.show', [$poll])}}" style="background-color: #F59E0B; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.375rem; margin-right: 10px;">Mostrar</a>
                                     <a href="{{route('poll.delete', [$poll])}}" style="background-color: #EF4444; color: #fff; padding: 0.5rem 0.75rem; border-radius: 0.375rem;">Excluir</a>
                                 </div>
                             </td> 

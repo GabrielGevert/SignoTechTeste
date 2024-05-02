@@ -28,7 +28,7 @@ class CreatePollRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string'],
-            'start_at' => ['required', 'date' ,'after_or_equal:now'],
+            'start_at' => ['required', 'date'],
             'end_at' => ['required', 'date' ,'after:start_at'],
             'option' => ['required', 'array', 'min:3']
         ];

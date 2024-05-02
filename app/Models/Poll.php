@@ -53,9 +53,9 @@ class Poll extends Model
         return $this->end_at->locale('pt')->diffForHumans();
     }
 
-    // public function votes()
-    // {
-    //     return $this->hasMany(Vote::class);
-    // }
+    public function votes()
+    {
+        return $this->hasMany(Vote::class);
+    }
 
 }

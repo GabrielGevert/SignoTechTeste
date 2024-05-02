@@ -15,8 +15,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('poll:start');
-        // $schedule->command('poll:end')->everyMinute();
+        $schedule->command('poll:start')->everyMinute();
+        $schedule->command('poll:end')->everyMinute();
     }
 
     /**

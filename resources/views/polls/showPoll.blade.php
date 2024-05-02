@@ -11,15 +11,26 @@
 <x-app-layout>
     <div class="container">
         <h1 class="h1-style">{{$poll->title}}</h1>
-        <h3 class="h3-style">Termina {{$poll->EndDateFormat}}</h3>
-        <form action="" method="post">
+        <h3 class="h3-style">{{$poll->EndDateFormat}}</h3>
+        @if($selectedOptionContent !== null)
+        <div class="selected-option">
+            <span>Seu voto foi:</span>
+            <p>{{$selectedOptionContent}}</p>
+        </div>
+        @endif
+        <form action="{{route('poll.vote',[$poll])}}" method="post">
             @csrf
 
             @foreach($poll->options as $option)
             <div class="options">
                 <div class="option">
-                    <input type="radio" id="option1" name="option" value="{{$option->id}}">
-                    <span">{{$option->content}}</span>
+                    <div class="left-section">
+                        <input type="radio" name="option_id" value="{{$option->id}}" @if (session('selectedOption') && session('selectedOption')->id == $option->id) checked @endif>
+                        <span>{{$option->content}}</span>
+                    </div>
+                    <div class="right-section">
+                        <span>votos: {{$option->votes_count}}</span>
+                    </div>
                 </div>
             </div>
             @endforeach
