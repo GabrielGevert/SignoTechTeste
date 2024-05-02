@@ -30,9 +30,9 @@ class EndPolls extends Command
     public function handle()
     {
         Poll::query()->where([
-            ['status', PollStatus::STARTED->value],
+            ['status', PollStatus::EM_ANDAMENTO->value],
             ['end_at', '<=', now()]
-        ])->update(['status'=>PollStatus::FINISHED->value]);
+        ])->update(['status'=>PollStatus::FINALIZADA->value]);
 
         return Command::SUCCESS;
     }

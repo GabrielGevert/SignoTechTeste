@@ -15,18 +15,17 @@ class UpdatePollRequest extends FormRequest
      */
     public function authorize()
     {
-        return  auth()->user()->is($this->poll->user) && $this->poll->status == PollStatus::PENDING->value;
+        return  auth()->user()->is($this->poll->user) && $this->poll->status == PollStatus::NAO_INICIADA->value;
     }
 
     public function prepareForValidation()
     {
-
         $this->merge([
-            'start_at' => Carbon::parse($this->start_date . $this->start_time)->toDateTimeString(),
-            'end_at' => Carbon::parse($this->end_date . $this->end_time)->toDateTimeString(),
+            'start_at' => Carbon::parse($this->start_date . ' ' . $this->start_time)->toDateTimeString(),
+            'end_at' => Carbon::parse($this->end_date . ' ' . $this->end_time)->toDateTimeString(),
         ]);
-
     }
+
 
 
     public function rules()
@@ -34,8 +33,8 @@ class UpdatePollRequest extends FormRequest
         return [
             'title' => ['required', 'string'],
             'start_at' => ['required', 'date'],
-            'end_at' => ['required', 'date' ,'after:start_at'],
-            //'option' => ['required', 'array', 'min:3']
+            'end_at' => ['required', 'date', 'after:start_at'],
+            'option' => ['required', 'array', 'min:3']
         ];
     }
 }

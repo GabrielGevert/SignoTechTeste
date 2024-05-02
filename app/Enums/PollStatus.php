@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum  PollStatus : string {
 
-    case PENDING = 'PENDING';
-    case STARTED = 'STARTED';
-    case FINISHED = 'FINISHED';
+    case NAO_INICIADA = 'Não iniciada';
+    case EM_ANDAMENTO = 'Em andamento';
+    case FINALIZADA = 'Finalizada';
 }

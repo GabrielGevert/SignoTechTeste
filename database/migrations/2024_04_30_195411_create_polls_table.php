@@ -20,7 +20,7 @@ return new class extends Migration
             $table->foreignId('created_by')->constrained('users');
             $table->dateTime('start_at');
             $table->dateTime('end_at');
-            $table->enum('status', array_column(PollStatus::cases(), 'value'))->default(PollStatus::PENDING->value);
+            $table->enum('status', array_column(PollStatus::cases(), 'value'))->default(PollStatus::NAO_INICIADA->value);
             $table->timestamps();
         });
     }

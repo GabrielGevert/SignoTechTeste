@@ -22,7 +22,7 @@ class PollController extends Controller
 
         $poll->options()->createMany($request->option);
 
-        return back();
+        return redirect()->route('dashboard');
     }
 
     public function index() 
@@ -34,7 +34,7 @@ class PollController extends Controller
 
     public function edit(Poll $poll)
     {
-        abort_if($poll->status != PollStatus::STARTED->value, 404);
+        abort_if($poll->status != PollStatus::NAO_INICIADA->value, 404);
 
         $poll = $poll->load('options');
         return view('polls.editPoll', compact('poll'));
@@ -42,7 +42,7 @@ class PollController extends Controller
 
     public function update(UpdatePollRequest $request, Poll $poll) 
     {
-        abort_if($poll->status != PollStatus::STARTED->value, 404);
+        abort_if($poll->status != PollStatus::NAO_INICIADA->value, 404);
 
         $data = $request->safe()->except('option');
 
@@ -57,11 +57,20 @@ class PollController extends Controller
 
     public function delete(Poll $poll) 
     {
-        if ($poll->status != PollStatus::PENDING->value) {
-            abort(404, 'Enquete não pendente');
-        }
+        // if ($poll->status != PollStatus::NAO_INICIADA->value) {
+        //     abort(404, 'Enquete não pendente');
+        // }
+
+        // Comentário acima -> caso excluir tabela apenas quando estiver pendente, descomentar.
         
+        if ($poll->votes()->exists()) {
+
+            $poll->votes()->delete();
+        }
+
         $poll->options()->delete();
+
+        
 
         $poll->delete();
         
@@ -72,13 +81,11 @@ class PollController extends Controller
     {
         $poll = $poll->load('options');
         
-        $selectedOptionContent = null; // Inicializa $selectedOptionContent como nulo
+        $selectedOptionContent = null;
 
-        // Verifica se o usuário está autenticado
         if (auth()->check()) {
             $userVoted = $poll->votes()->where('user_id', auth()->id())->exists();
             
-            // Se o usuário já votou, busca o conteúdo da opção selecionada
             if ($userVoted) {
                 $selectedOptionId = $poll->votes()->where('user_id', auth()->id())->first()->option_id;
                 $selectedOption = Option::find($selectedOptionId);
@@ -86,7 +93,6 @@ class PollController extends Controller
             }
         }
         
-        // Retorna a view com as informações necessárias
         return view('polls.showPoll', compact('poll', 'selectedOptionContent'));
     }
 
@@ -94,7 +100,7 @@ class PollController extends Controller
 
     public function vote(VoteRequest $request, Poll $poll)
     {
-        abort_if($poll->status != PollStatus::STARTED->value, 404);
+        abort_if($poll->status != PollStatus::EM_ANDAMENTO->value, 404);
 
         $vote = $poll->votes()->updateOrCreate(['user_id' => auth()->id()], ['option_id' => $request->option_id]);
 
